@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <cctype>
+#include <utility>
 
 void parseInput(std::string &polymer)
 {
@@ -15,9 +16,10 @@ void parseInput(std::string &polymer)
 	input.close();
 }
 
-uint64_t react(std::string &polymer)
+std::pair<uint64_t,uint64_t> react(std::string &polymer)
 {
-	uint64_t result = 0;
+	std::pair<uint64_t,uint64_t> result;
+	result.second = UINT64_MAX;
 	
 	for(int i=0; i<(int)polymer.size()-1; i++)
 	{
@@ -27,22 +29,12 @@ uint64_t react(std::string &polymer)
 			i-=2;
 		} 
 	}
-	result = polymer.length();
+	result.first = polymer.length();
 
-	return result;
-}
-
-uint64_t removeAndReact(std::string &polymerB)
-{
-	uint64_t result = UINT64_MAX;
-	
-	react(polymerB);
-	
 	std::string newPolymer;
-	
 	for(char c='A'; c<= 'Z'; c++)
 	{
-		newPolymer = polymerB;
+		newPolymer = polymer;
 		for(int i=0; i<(int)newPolymer.size()-1; i++)
 		{
 			if(newPolymer[i] == c || newPolymer[i] == c+32)
@@ -56,28 +48,23 @@ uint64_t removeAndReact(std::string &polymerB)
 				i-=2;
 			} 
 		}
-		if(result > newPolymer.length())
+		if(result.second > newPolymer.length())
 		{
-			result = newPolymer.length();
+			result.second = newPolymer.length();
 		}
 	}
-	
 	return result;
 }
 
 int main()
 {
-	uint64_t resultA = 0;
-	uint64_t resultB = 0;
+	std::pair<uint64_t,uint64_t> result;
 	std::string polymer;
-	std::string polymerB;
 	parseInput(polymer);
-	polymerB = polymer;
 	
-	resultA = react(polymer);
-	resultB = removeAndReact(polymerB);
+	result = react(polymer);
 	
-	std::cout << "result A: " << resultA << '\n';
-	std::cout << "result B: " << resultB << std::endl;
+	std::cout << "result A: " << result.first << '\n';
+	std::cout << "result B: " << result.second << std::endl;
 	return 0;
 }
