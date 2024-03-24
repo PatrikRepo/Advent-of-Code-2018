@@ -74,7 +74,7 @@ void parseInput(std::vector<Light> &lights, uint64_t &time)
 
 void printMessage(std::vector<Light> &lights)
 {
-	std::string line(62, '.');
+	std::string line(62, ' ');
 	std::vector<std::string> map;
 	for(int i=0; i<10; i++)
 	{
