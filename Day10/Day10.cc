@@ -12,6 +12,7 @@ struct Light
 };
 
 //Actually logic is in parseinput. Didn't really intend for this, but I was transforming data here anyway so why not just all the way?
+//Works with my input, not with yours. But all that is needed is to do some math to steer in while(abs(y) > 194) correctly.
 void parseInput(std::vector<Light> &lights, uint64_t &time)
 {
 	std::string line;
